@@ -1,6 +1,6 @@
 import { CurrencyType } from './CurrencyType';
 
-type RateType = {
+export type RateType = {
   [key in CurrencyType]: number;
 };
 
