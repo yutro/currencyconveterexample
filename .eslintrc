@@ -18,7 +18,8 @@
     "sort-keys": "error",
     "newline-after-var": "error",
     "newline-before-return": "warn",
-    "max-lines": ["error", {"max": 100, "skipComments": true}]
+    "max-lines": ["error", {"max": 100, "skipComments": true}],
+    "no-multiple-empty-lines": "error"
   },
   "settings": {
     "react": {
