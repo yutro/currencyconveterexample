@@ -33,7 +33,7 @@ export const ConvertButton = () => {
   };
 
   if (basePocket) {
-    if (base.amount && base.amount < basePocket.amount) {
+    if (base.amount && base.amount <= basePocket.amount) {
       if (buttonDisabled) {
         setButtonDisabled(false);
       }
