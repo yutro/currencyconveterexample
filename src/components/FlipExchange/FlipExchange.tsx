@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
 import { Fab } from '@material-ui/core';
 import { Cached as IconCached } from '@material-ui/icons';
@@ -7,7 +7,7 @@ type PropsType = Readonly<{
   className?: string;
 }>;
 
-export const FlipExchange = (props: PropsType): ReactNode => {
+export const FlipExchange = (props: PropsType): ReactElement => {
   const dispatch = useDispatch();
 
   return (
