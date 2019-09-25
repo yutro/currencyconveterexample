@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import { PocketType } from '../Pocket/PocketTypes';
 import { fxData } from '../../tests/mocks/FxApiResponse';
+import { FlipExchange } from '../../components/FlipExchange/FlipExchange';
 
 const excludeCurrency = (
   currencyList: CurrencyListType,
@@ -48,24 +49,32 @@ export const Exchange: FunctionComponent = () => {
     return (): void => clearInterval(intervalID);
   }, [dispatch]);
 
+  const [exchangeCardBase, exchangeCardTarget] = currencies;
+
   return (
     <>
-      {currencies.map((currencyItem, index) => {
-        return (
-          <Grid item key={index}>
-            <CurrencyPrompt
-              {...currencyItem}
-              index={index}
-              currencyList={
-                index === 0
-                  ? excludeCurrency(currencyList, currencies[1].currency)
-                  : excludeCurrency(currencyList, currencies[0].currency)
-              }
-            />
-          </Grid>
-        );
-      })}
       <Grid container justify="center">
+        <Grid item>
+          <CurrencyPrompt
+            {...exchangeCardBase}
+            index={0}
+            currencyList={excludeCurrency(
+              currencyList,
+              exchangeCardTarget.currency
+            )}
+          />
+        </Grid>
+        <FlipExchange />
+        <Grid item>
+          <CurrencyPrompt
+            {...exchangeCardTarget}
+            index={1}
+            currencyList={excludeCurrency(
+              currencyList,
+              exchangeCardBase.currency
+            )}
+          />
+        </Grid>
         <ConvertButton />
       </Grid>
     </>

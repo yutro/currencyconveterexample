@@ -6,7 +6,7 @@ const initialState: ExchangeType = {
 };
 
 type ActionType = {
-  type: 'SET_CURRENCY' | 'SET_AMOUNT' | 'SET_RATES';
+  type: 'SET_CURRENCY' | 'SET_AMOUNT' | 'SET_RATES' | 'FLIP_EXCHANGE';
   payload?: any;
 };
 
@@ -30,6 +30,13 @@ export const exchange = (
     state.currencies[index].currency = currency;
 
     return { ...state };
+  }
+
+  if (action.type === 'FLIP_EXCHANGE') {
+    const { currencies, ...rest } = state;
+    const reversedCurrencies = [...currencies].reverse();
+
+    return { ...rest, currencies: reversedCurrencies };
   }
 
   if (action.type === 'SET_AMOUNT') {
