@@ -1,11 +1,13 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import { CurrencyListType, CurrencyType } from '../../types/CurrencyType';
+import { selectHandler } from './CurrencySelectHandlers';
 
+export type SelectHandlerType = (value: CurrencyType) => void;
 type CurrencySelectPropsType = {
   currencyList: CurrencyListType;
   name: string;
-  onSelect: (value: CurrencyType) => void;
+  onSelect: SelectHandlerType;
   defaultSelect: CurrencyType;
 };
 
@@ -20,15 +22,10 @@ export const CurrencySelect = ({
       <InputLabel htmlFor={name}>Currency</InputLabel>
       <Select
         value={defaultSelect}
-        onChange={({ target: { value } }) => {
-          if (value) {
-            // @ts-ignore
-            onSelect(value);
-          }
-        }}
+        onChange={selectHandler(onSelect)}
         inputProps={{
-          name,
-          id: name
+          id: name,
+          name
         }}
       >
         {currencyList.map((currency: string) => (
