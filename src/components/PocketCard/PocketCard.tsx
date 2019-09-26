@@ -18,8 +18,8 @@ type PocketCardPropsType = Readonly<{
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     contentContainer: {
-      padding: theme.spacing(2),
-      margin: theme.spacing(2)
+      margin: theme.spacing(2),
+      padding: theme.spacing(2)
     }
   })
 );
