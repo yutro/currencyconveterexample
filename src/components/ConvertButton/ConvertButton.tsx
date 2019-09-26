@@ -7,14 +7,17 @@ import { getPocketByCurrency } from '../../pages/Pocket/helpers';
 import { PocketStateType, PocketType } from '../../pages/Pocket/PocketTypes';
 
 export const ConvertButton = () => {
-  const [base, target]: ExchangeCurrenciesListType = useSelector(
+  const [
+    baseExchangeItem,
+    targetExchangeItem
+  ]: ExchangeCurrenciesListType = useSelector(
     ({ exchange: { currencies } }: AppStateType) => currencies
   );
   const pockets: PocketStateType = useSelector(
     ({ pockets }: AppStateType) => pockets
   );
   const basePocket: PocketType | null = getPocketByCurrency(
-    base.currency,
+    baseExchangeItem.currency,
     pockets
   );
 
@@ -23,17 +26,26 @@ export const ConvertButton = () => {
   const dispatch = useDispatch();
   const convert = () => {
     dispatch({
-      payload: { amount: base.amount, currency: base.currency },
+      payload: {
+        amount: baseExchangeItem.amount,
+        currency: baseExchangeItem.currency
+      },
       type: 'UPDATE_BASE_POCKET'
     });
     dispatch({
-      payload: { amount: target.amount, currency: target.currency },
+      payload: {
+        amount: targetExchangeItem.amount,
+        currency: targetExchangeItem.currency
+      },
       type: 'UPDATE_TARGET_POCKET'
     });
   };
 
   if (basePocket) {
-    if (base.amount && base.amount <= basePocket.amount) {
+    if (
+      baseExchangeItem.amount &&
+      baseExchangeItem.amount <= basePocket.amount
+    ) {
       if (buttonDisabled) {
         setButtonDisabled(false);
       }
