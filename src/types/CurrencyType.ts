@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 export type CurrencyType =
   | 'AED'
   | 'AFN'
