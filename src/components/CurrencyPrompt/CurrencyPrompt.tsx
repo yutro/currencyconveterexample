@@ -1,18 +1,11 @@
-import React, { ReactElement } from 'react';
-import {
-  createStyles,
-  Grid,
-  makeStyles,
-  Paper,
-  TextField,
-  Theme
-} from '@material-ui/core';
+import React, { ChangeEvent, ReactElement } from 'react';
+import { Grid, Paper, TextField, FormHelperText } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoins } from '@fortawesome/free-solid-svg-icons';
 import { CurrencyListType, CurrencyType } from '../../types/CurrencyType';
 import { CurrencySelect } from '../CurrencySelect/CurrencySelect';
-import { useDispatch } from 'react-redux';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
+import { useCurrencyPromptHandler, useStyles } from './CurrencyPromptHandlers';
 
 type CurrencyPromptType = Readonly<{
   amount: number;
@@ -21,15 +14,6 @@ type CurrencyPromptType = Readonly<{
   index: number;
 }>;
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    contentContainer: {
-      padding: theme.spacing(3),
-      margin: theme.spacing(2)
-    }
-  })
-);
-
 export const CurrencyPrompt = ({
   currencyList,
   currency,
@@ -37,8 +21,10 @@ export const CurrencyPrompt = ({
   index
 }: CurrencyPromptType): ReactElement => {
   const classes = useStyles();
-
-  const dispatch = useDispatch();
+  const {
+    amountChangeHandler,
+    selectCurrencyHandler
+  } = useCurrencyPromptHandler(index);
 
   return (
     <Paper className={classes.contentContainer}>
@@ -48,10 +34,9 @@ export const CurrencyPrompt = ({
             currencyList={currencyList}
             name="base"
             defaultSelect={currency}
-            onSelect={(currency: CurrencyType): void => {
-              dispatch({ type: 'SET_CURRENCY', payload: { index, currency } });
-            }}
+            onSelect={selectCurrencyHandler}
           />
+          <FormHelperText>Balance: 0</FormHelperText>
         </Grid>
         <Grid container justify="center" xs={2}>
           <FontAwesomeIcon icon={faCoins} size="3x" />
@@ -65,13 +50,7 @@ export const CurrencyPrompt = ({
           >
             <TextValidator
               label="amount"
-              // @ts-ignore
-              onChange={({ target: { value } }): void => {
-                dispatch({
-                  type: 'SET_AMOUNT',
-                  payload: { index, amount: value }
-                });
-              }}
+              onChange={amountChangeHandler}
               name="amount"
               value={amount || ''}
               placeholder="0.00"
