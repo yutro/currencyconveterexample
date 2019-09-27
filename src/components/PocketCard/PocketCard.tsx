@@ -39,8 +39,8 @@ export const PocketCard = ({
             <Grid item>{currency}</Grid>
           </Grid>
         </Grid>
-        <Grid item xs={1}>
-          {amount}
+        <Grid item xs={2}>
+          {amount.toFixed(2)}
         </Grid>
       </Grid>
     </Paper>

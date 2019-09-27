@@ -34,14 +34,14 @@ export const CurrencyPrompt = ({
   return pocket ? (
     <Paper className={classes.contentContainer}>
       <Grid container justify="space-between">
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <CurrencySelect
             currencyList={currencyList}
             name="base"
             defaultSelect={currency}
             onSelect={selectCurrencyHandler}
           />
-          <FormHelperText>Balance: {pocket.amount}</FormHelperText>
+          <FormHelperText>Balance: {pocket.amount.toFixed(2)}</FormHelperText>
         </Grid>
         <Grid item xs={5}>
           <ValidatorForm
