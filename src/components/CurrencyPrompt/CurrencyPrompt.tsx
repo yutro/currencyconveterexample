@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react';
 import { Grid, Paper, TextField, FormHelperText } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoins } from '@fortawesome/free-solid-svg-icons';
 import { CurrencyListType, CurrencyType } from '../../types/CurrencyType';
 import { CurrencySelect } from '../CurrencySelect/CurrencySelect';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
@@ -44,9 +42,6 @@ export const CurrencyPrompt = ({
             onSelect={selectCurrencyHandler}
           />
           <FormHelperText>Balance: {pocket.amount}</FormHelperText>
-        </Grid>
-        <Grid container justify="center">
-          <FontAwesomeIcon icon={faCoins} size="3x" />
         </Grid>
         <Grid item xs={5}>
           <ValidatorForm
