@@ -45,7 +45,7 @@ export const CurrencyPrompt = ({
           />
           <FormHelperText>Balance: {pocket.amount}</FormHelperText>
         </Grid>
-        <Grid container justify="center" xs={2}>
+        <Grid container justify="center">
           <FontAwesomeIcon icon={faCoins} size="3x" />
         </Grid>
         <Grid item xs={5}>
