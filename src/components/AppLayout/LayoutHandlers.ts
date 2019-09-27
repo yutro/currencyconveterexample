@@ -5,5 +5,5 @@ export const useTabSwitcher = () => {
   const switchTab = (event: ChangeEvent<{}>, newValue: number): void =>
     setActiveTabIndex(newValue);
 
-  return {activeTabIndex, switchTab};
+  return { activeTabIndex, switchTab };
 };
