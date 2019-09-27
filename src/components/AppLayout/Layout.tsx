@@ -1,16 +1,15 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { AppBar, Tab, Tabs } from '@material-ui/core';
 import { TabPanel } from '../TabPanel/TabPanel';
 import { Pocket } from '../../pages/Pocket/Pocket';
 import { Exchange } from '../../pages/Exchange/Exchange';
+import { useTabSwitcher } from './LayoutHandlers';
 
 export const AppLayout = () => {
-  const [activeTabIndex, setActiveTabIndex] = React.useState(0);
-  const switchTab = (event: ChangeEvent<{}>, newValue: number): void =>
-    setActiveTabIndex(newValue);
+  const { activeTabIndex, switchTab } = useTabSwitcher();
 
   return (
-    <div style={{ maxWidth: '480px', margin: '0 auto' }}>
+    <div style={{ margin: '0 auto', maxWidth: '480px' }}>
       <AppBar position="static">
         <Tabs
           value={activeTabIndex}
