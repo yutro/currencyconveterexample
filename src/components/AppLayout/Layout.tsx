@@ -21,12 +21,15 @@ export const AppLayout = () => {
           <Tab label="Exchange" id="simple-tab-2" />
         </Tabs>
       </AppBar>
-      <TabPanel value={activeTabIndex} index={0}>
-        <Pocket />
-      </TabPanel>
-      <TabPanel value={activeTabIndex} index={1}>
-        <Exchange />
-      </TabPanel>
+      {activeTabIndex ? (
+        <TabPanel value={activeTabIndex} index={1}>
+          <Exchange />
+        </TabPanel>
+      ) : (
+        <TabPanel value={activeTabIndex} index={0}>
+          <Pocket />
+        </TabPanel>
+      )}
     </div>
   );
 };
