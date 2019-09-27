@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { AppBar, Tab, Tabs } from '@material-ui/core';
 import { TabPanel } from '../TabPanel/TabPanel';
 import { Pocket } from '../../pages/Pocket/Pocket';
 import { Exchange } from '../../pages/Exchange/Exchange';
 import { useTabSwitcher } from './LayoutHandlers';
 
-export const AppLayout = () => {
+export const AppLayout = (): ReactElement => {
   const { activeTabIndex, switchTab } = useTabSwitcher();
 
   return (
