@@ -6,6 +6,9 @@ import { CurrencyListType, CurrencyType } from '../../types/CurrencyType';
 import { CurrencySelect } from '../CurrencySelect/CurrencySelect';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useCurrencyPromptHandler, useStyles } from './CurrencyPromptHandlers';
+import { useSelector } from 'react-redux';
+import { AppStateType } from '../../redux/reducers';
+import { getPocketByCurrency } from '../../pages/Pocket/helpers';
 
 type CurrencyPromptType = Readonly<{
   amount: number;
@@ -19,24 +22,28 @@ export const CurrencyPrompt = ({
   currency,
   amount,
   index
-}: CurrencyPromptType): ReactElement => {
+}: CurrencyPromptType): ReactElement | null => {
+  const pocket = useSelector(({ pockets }: AppStateType) =>
+    getPocketByCurrency(currency, pockets)
+  );
+
   const classes = useStyles();
   const {
     amountChangeHandler,
     selectCurrencyHandler
   } = useCurrencyPromptHandler(index);
 
-  return (
+  return pocket ? (
     <Paper className={classes.contentContainer}>
       <Grid container justify="space-between">
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <CurrencySelect
             currencyList={currencyList}
             name="base"
             defaultSelect={currency}
             onSelect={selectCurrencyHandler}
           />
-          <FormHelperText>Balance: 0</FormHelperText>
+          <FormHelperText>Balance: {pocket.amount}</FormHelperText>
         </Grid>
         <Grid container justify="center" xs={2}>
           <FontAwesomeIcon icon={faCoins} size="3x" />
@@ -70,5 +77,5 @@ export const CurrencyPrompt = ({
         </Grid>
       </Grid>
     </Paper>
-  );
+  ) : null;
 };
