@@ -1,4 +1,7 @@
-import { FxResponse } from '../../types/FxApi';
+/* global Promise */
+// eslint-disable-next-line max-lines
+import { FxResponse, RateType } from '../../types/FxApi';
+import { CurrencyType } from '../../types/CurrencyType';
 
 export const fxData: FxResponse = {
   disclaimer: 'Usage subject to terms: https://openexchangerates.org/terms',
@@ -179,3 +182,42 @@ export const fxData: FxResponse = {
     ZWL: 322.000001
   }
 };
+
+const mockedRates: any = {
+  EUR: {
+    EUR: 1,
+    GBP: 0.89,
+    USD: 1.09
+  },
+  GBP: {
+    EUR: 1.13,
+    GBP: 1,
+    USD: 1.24
+  },
+  USD: {
+    EUR: 0.91,
+    GBP: 0.81,
+    USD: 1
+  }
+};
+
+export const fetchRates = (
+  currency: CurrencyType,
+  { dummy }: { dummy: boolean }
+): Promise<RateType> => {
+  if (dummy) {
+    return new Promise(resolve => resolve(mockedRates[currency]));
+  }
+
+  return mockedRates[currency];
+};
+
+// fetch(
+//   //   `http://data.fixer.io/api/latest?access_key=358183c9d3e9e0ebf6590821377322ba&base=${currency}&symbols=USD,GBP,EUR`
+//   // )
+//   //   .then(response => response.json())
+//   //   .then((data: FxResponse) => {
+//   //     console.log('-----', data);
+//   //     // dispatch({ type: 'SET_RATES', payload: data.rates });
+//   //   })
+//   //   .catch(e => console.log('--- error fetching data ---', e));

@@ -6,8 +6,9 @@ import { CurrencyPrompt } from '../../components/CurrencyPrompt/CurrencyPrompt';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 import { PocketType } from '../Pocket/PocketTypes';
-import { fxData } from '../../tests/mocks/FxApiResponse';
+import { fetchRates } from '../../tests/mocks/FxApiResponse';
 import { FlipExchange } from '../../components/FlipExchange/FlipExchange';
+import { setAmount, setRates } from './ExchangeActions';
 
 const excludeCurrency = (
   currencyList: CurrencyListType,
@@ -36,28 +37,27 @@ export const Exchange: FunctionComponent = () => {
     return currency;
   });
   const [exchangeCardBase, exchangeCardTarget] = currencies;
+  const { currency, amount } = exchangeCardBase;
 
   useEffect(() => {
+    fetchRates(currency, { dummy: true }).then(rates => {
+      dispatch(setRates(rates));
+      // recalculate target after fetching
+      dispatch(setAmount(amount, 0));
+    });
+
     const intervalID: any = setInterval(() => {
       // const [{ currency }] = currencies;
 
-      // fetch(
-      //   `http://data.fixer.io/api/latest?access_key=358183c9d3e9e0ebf6590821377322ba&base=${currency}&symbols=USD,GBP,EUR`
-      // )
-      //   .then(response => response.json())
-      //   .then((data: FxResponse) => {
-      //     console.log('-----', data);
-      //     // dispatch({ type: 'SET_RATES', payload: data.rates });
-      //   })
-      //   .catch(e => console.log('--- error fetching data ---', e));
-
-      dispatch({ payload: fxData.rates, type: 'SET_RATES' });
+      fetchRates(currency, { dummy: true }).then(rates => {
+        dispatch(setRates(rates));
+        // recalculate target after fetching
+        dispatch(setAmount(amount, 0));
+      });
     }, 10000);
 
-    dispatch({ payload: fxData.rates, type: 'SET_RATES' });
-
     return (): void => clearInterval(intervalID);
-  }, [dispatch]);
+  }, [dispatch, currency]);
 
   return (
     <>
