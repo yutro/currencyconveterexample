@@ -1,14 +1,11 @@
 import { ExchangeType } from './exchangeTypes';
+import { ExchangeActionsType } from './ExchangeActions';
 
 export const initialState: ExchangeType = {
   currencies: [{ amount: 0, currency: 'USD' }, { amount: 0, currency: 'GBP' }],
   rates: undefined
 };
 
-type ActionType = {
-  type: 'SET_CURRENCY' | 'SET_AMOUNT' | 'SET_RATES' | 'FLIP_EXCHANGE';
-  payload?: any;
-};
 
 const convertCurrency = (
   amount: number,
@@ -22,7 +19,7 @@ const normalizeInput = (amount: number): number =>
 
 export const exchange = (
   state = initialState,
-  action: ActionType
+  action: ExchangeActionsType
 ): ExchangeType => {
   if (action.type === 'SET_CURRENCY' && action.payload) {
     const { currency, index } = action.payload;
