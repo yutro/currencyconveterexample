@@ -1,7 +1,9 @@
 import { CurrencyType } from '../../types/CurrencyType';
+import { RateType } from '../../types/FxApi';
 
 const SET_CURRENCY = 'SET_CURRENCY';
 const SET_AMOUNT = 'SET_AMOUNT';
+const SET_RATES = 'SET_RATES';
 
 type SetCurrencyType = {
   currency: CurrencyType;
@@ -21,7 +23,7 @@ export const setCurrency = (
 });
 
 type SetAmountType = {
-  amount: string;
+  amount: number;
   index: number;
 };
 
@@ -31,12 +33,22 @@ type SetAmountReturnType = {
 };
 
 export const setAmount = (
-  amount: string,
+  amount: number,
   index: number
 ): SetAmountReturnType => ({
   payload: { amount, index },
   type: 'SET_AMOUNT'
 });
 
-export type ExchangeActionsType = SetCurrencyReturnType | SetAmountReturnType;
+type SetRatesReturnType = {
+  payload: RateType;
+  type: typeof SET_RATES;
+};
+
+export const setRates = (payload: RateType): SetRatesReturnType => ({
+  payload,
+  type: SET_RATES
+});
+
+export type ExchangeActionsType = SetCurrencyReturnType | SetAmountReturnType | SetRatesReturnType;
 // type: 'SET_CURRENCY' | 'SET_AMOUNT' | 'SET_RATES' | 'FLIP_EXCHANGE';
