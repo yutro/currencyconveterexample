@@ -6,7 +6,6 @@ export const initialState: ExchangeType = {
   rates: undefined
 };
 
-
 const convertCurrency = (
   amount: number,
   rate: number,
