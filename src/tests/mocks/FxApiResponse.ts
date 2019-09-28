@@ -209,15 +209,14 @@ export const fetchRates = (
     return new Promise(resolve => resolve(mockedRates[currency]));
   }
 
-  return mockedRates[currency];
+  return new Promise<RateType>(resolve => {
+    fetch(
+      `http://data.fixer.io/api/latest?access_key=358183c9d3e9e0ebf6590821377322ba&base=${currency}&symbols=USD,GBP,EUR`
+    )
+      .then(response => response.json())
+      .then((data: FxResponse) => {
+        resolve(data.rates);
+      })
+      .catch(e => console.log('--- error fetching data ---', e));
+  });
 };
-
-// fetch(
-//   //   `http://data.fixer.io/api/latest?access_key=358183c9d3e9e0ebf6590821377322ba&base=${currency}&symbols=USD,GBP,EUR`
-//   // )
-//   //   .then(response => response.json())
-//   //   .then((data: FxResponse) => {
-//   //     console.log('-----', data);
-//   //     // dispatch({ type: 'SET_RATES', payload: data.rates });
-//   //   })
-//   //   .catch(e => console.log('--- error fetching data ---', e));
