@@ -9,6 +9,6 @@ export type ExchangeItemType = {
 export type ExchangeCurrenciesListType = ReadonlyArray<ExchangeItemType>;
 
 export type ExchangeType = {
-  rates: RateType | {};
+  rates?: RateType;
   currencies: ExchangeCurrenciesListType;
 };
