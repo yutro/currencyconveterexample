@@ -1,14 +1,14 @@
 import React, { ReactElement } from 'react';
-import { useDispatch } from 'react-redux';
 import { Fab } from '@material-ui/core';
 import { Cached as IconCached } from '@material-ui/icons';
+import { useFlipExchange } from './FlipExchangeHandlers';
 
 type PropsType = Readonly<{
   className?: string;
 }>;
 
 export const FlipExchange = (props: PropsType): ReactElement => {
-  const dispatch = useDispatch();
+  const { dispatchFlipExchange } = useFlipExchange();
 
   return (
     <Fab
@@ -16,9 +16,7 @@ export const FlipExchange = (props: PropsType): ReactElement => {
       color="primary"
       size="small"
       aria-label="flip-exchange"
-      onClick={(): void => {
-        dispatch({ type: 'FLIP_EXCHANGE' });
-      }}
+      onClick={dispatchFlipExchange}
     >
       <IconCached />
     </Fab>
