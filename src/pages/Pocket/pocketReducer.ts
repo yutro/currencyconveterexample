@@ -1,7 +1,7 @@
 import { PocketStateType } from './PocketTypes';
 import { getPocketByCurrency } from './helpers';
 
-const initialState: PocketStateType = {
+export const initialState: PocketStateType = {
   allIds: [1, 2, 3],
   byId: {
     '1': { amount: 100, currency: 'USD', id: 1 },
