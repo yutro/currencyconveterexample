@@ -9,7 +9,6 @@ import { PocketType } from '../Pocket/PocketTypes';
 import { fetchRates } from '../../tests/mocks/FxApiResponse';
 import { FlipExchange } from '../../components/FlipExchange/FlipExchange';
 import { setAmount, setRates } from './ExchangeActions';
-import Timeout = NodeJS.Timeout;
 
 const excludeCurrency = (
   currencyList: CurrencyListType,
@@ -47,7 +46,7 @@ export const Exchange: FunctionComponent = () => {
       dispatch(setAmount(amount, 0));
     });
 
-    const intervalID: Timeout = setInterval(() => {
+    const intervalID = setInterval(() => {
       fetchRates(currency, { dummy: true }).then(rates => {
         dispatch(setRates(rates));
         // recalculate target after fetching
