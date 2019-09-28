@@ -5,8 +5,10 @@ import { AppStateType } from '../../redux/reducers';
 import { ExchangeCurrenciesListType } from '../../pages/Exchange/exchangeTypes';
 import { getPocketByCurrency } from '../../pages/Pocket/helpers';
 import { PocketStateType, PocketType } from '../../pages/Pocket/PocketTypes';
+import { convert } from './ConvertButtonHandlers';
 
 export const ConvertButton = () => {
+  const dispatch = useDispatch();
   const [
     baseExchangeItem,
     targetExchangeItem
@@ -22,24 +24,6 @@ export const ConvertButton = () => {
   );
 
   const [buttonDisabled, setButtonDisabled] = useState(true);
-
-  const dispatch = useDispatch();
-  const convert = () => {
-    dispatch({
-      payload: {
-        amount: baseExchangeItem.amount,
-        currency: baseExchangeItem.currency
-      },
-      type: 'UPDATE_BASE_POCKET'
-    });
-    dispatch({
-      payload: {
-        amount: targetExchangeItem.amount,
-        currency: targetExchangeItem.currency
-      },
-      type: 'UPDATE_TARGET_POCKET'
-    });
-  };
 
   if (basePocket) {
     if (
@@ -60,7 +44,7 @@ export const ConvertButton = () => {
     <Button
       variant="contained"
       color="primary"
-      onClick={convert}
+      onClick={convert(dispatch, [baseExchangeItem, targetExchangeItem])}
       disabled={buttonDisabled}
     >
       Convert
