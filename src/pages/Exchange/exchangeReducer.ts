@@ -1,8 +1,8 @@
 import { ExchangeType } from './exchangeTypes';
 
-const initialState: ExchangeType = {
+export const initialState: ExchangeType = {
   currencies: [{ amount: 0, currency: 'USD' }, { amount: 0, currency: 'GBP' }],
-  rates: {}
+  rates: undefined
 };
 
 type ActionType = {
@@ -24,7 +24,7 @@ export const exchange = (
   state = initialState,
   action: ActionType
 ): ExchangeType => {
-  if (action.type === 'SET_CURRENCY') {
+  if (action.type === 'SET_CURRENCY' && action.payload) {
     const { currency, index } = action.payload;
 
     state.currencies[index].currency = currency;
@@ -39,56 +39,20 @@ export const exchange = (
     return { ...rest, currencies: reversedCurrencies };
   }
 
-  if (action.type === 'SET_AMOUNT') {
+  if (action.type === 'SET_AMOUNT' && action.payload) {
     const { amount: payloadAmount, index } = action.payload;
 
     state.currencies[index].amount = payloadAmount;
 
-    if (index === 0) {
-      const { currency } = state.currencies[1];
-      // @ts-ignore
+    const { currency } = state.currencies[1];
+
+    if (state.rates) {
       const currencyRate = state.rates[currency];
 
       state.currencies[1].amount = normalizeInput(
         convertCurrency(payloadAmount, currencyRate, index)
       );
-    } else {
-      const { currency } = state.currencies[1];
-      // @ts-ignore
-      const currencyRate = state.rates[currency];
-
-      state.currencies[0].amount = normalizeInput(
-        convertCurrency(payloadAmount, currencyRate, index)
-      );
     }
-
-    // if (payloadAmount !== '') {
-    //   if (index === 0) {
-    //     const { currency } = state.currencies[1];
-    //     // @ts-ignore
-    //     if (state.rates[currency]) {
-    //       // @ts-ignore
-    //       const currencyRate = state.rates[currency];
-    //
-    //       state.currencies[1].amount = normalizeInput(
-    //         convertCurrency(payloadAmount, currencyRate)
-    //       );
-    //     }
-    //   }
-    //
-    //   const { currency } = state.currencies[1];
-    //   // @ts-ignore
-    //   if (state.rates[currency]) {
-    //     // @ts-ignore
-    //     const currencyRate = state.rates[currency];
-    //
-    //     state.currencies[1].amount = normalizeInput(
-    //       convertCurrency(payloadAmount, currencyRate)
-    //     );
-    //   }
-    //
-    //   state.currencies[0].amount = payloadAmount;
-    // }
 
     return { ...state };
   }
