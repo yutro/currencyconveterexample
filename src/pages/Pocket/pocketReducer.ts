@@ -1,5 +1,6 @@
 import { PocketStateType } from './PocketTypes';
 import { getPocketByCurrency } from './helpers';
+import { PocketActions } from './PocketActions';
 
 export const initialState: PocketStateType = {
   allIds: [1, 2, 3],
@@ -12,7 +13,7 @@ export const initialState: PocketStateType = {
 
 export const pockets = (
   state = initialState,
-  action: { type: string; payload?: any }
+  action: PocketActions
 ): PocketStateType => {
   if (action.type === 'UPDATE_BASE_POCKET') {
     const pocket = getPocketByCurrency(action.payload.currency, state);

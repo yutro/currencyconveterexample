@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { ExchangeCurrenciesListType } from '../../pages/Exchange/exchangeTypes';
-import { updatePocket } from './ConvertButtonActions';
+import { updatePocket } from '../../pages/Pocket/PocketActions';
 
 export const convert = (
   dispatch: Dispatch,

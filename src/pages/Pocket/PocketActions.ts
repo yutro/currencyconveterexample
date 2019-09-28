@@ -11,4 +11,4 @@ export const updatePocket = (
 
 const UpdatePocketReturnType = getReturnType(updatePocket);
 
-type Actions = typeof UpdatePocketReturnType;
+export type PocketActions = typeof UpdatePocketReturnType;
