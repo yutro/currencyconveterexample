@@ -13,10 +13,10 @@ export const initialState: PocketStateType = {
 
 export const pockets = (
   state = initialState,
-  action: PocketActions
+  { type, payload }: PocketActions
 ): PocketStateType => {
-  if (action.type === 'UPDATE_BASE_POCKET') {
-    const pocket = getPocketByCurrency(action.payload.currency, state);
+  if (type === 'UPDATE_BASE_POCKET') {
+    const pocket = getPocketByCurrency(payload.currency, state);
 
     if (pocket) {
       return {
@@ -25,15 +25,15 @@ export const pockets = (
           ...state.byId,
           [pocket.id]: {
             ...pocket,
-            amount: pocket.amount - action.payload.amount
+            amount: pocket.amount - payload.amount
           }
         }
       };
     }
   }
 
-  if (action.type === 'UPDATE_TARGET_POCKET') {
-    const pocket = getPocketByCurrency(action.payload.currency, state);
+  if (type === 'UPDATE_TARGET_POCKET') {
+    const pocket = getPocketByCurrency(payload.currency, state);
 
     if (pocket) {
       return {
@@ -42,7 +42,7 @@ export const pockets = (
           ...state.byId,
           [pocket.id]: {
             ...pocket,
-            amount: pocket.amount + action.payload.amount
+            amount: pocket.amount + payload.amount
           }
         }
       };
