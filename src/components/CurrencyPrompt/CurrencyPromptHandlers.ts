@@ -2,21 +2,19 @@ import { useDispatch } from 'react-redux';
 import { CurrencyType } from '../../types/CurrencyType';
 import { ChangeEvent } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import { setCurrency, setAmount } from '../../pages/Exchange/ExchangeActions';
 
 export const useCurrencyPromptHandler = (index: number) => {
   const dispatch = useDispatch();
 
   const selectCurrencyHandler = (currency: CurrencyType): void => {
-    dispatch({ payload: { currency, index }, type: 'SET_CURRENCY' });
+    dispatch(setCurrency(currency, index));
   };
 
   const amountChangeHandler = ({
     target: { value }
   }: ChangeEvent<{ value: unknown }>): void => {
-    dispatch({
-      payload: { amount: value, index },
-      type: 'SET_AMOUNT'
-    });
+    dispatch(setAmount(value as number, index));
   };
 
   return { amountChangeHandler, selectCurrencyHandler };
