@@ -37,7 +37,7 @@ export const CurrencyPrompt = ({
         <Grid item xs={4}>
           <CurrencySelect
             currencyList={currencyList}
-            name="base"
+            name={`prompt-${index}`}
             defaultSelect={currency}
             onSelect={selectCurrencyHandler}
           />
@@ -53,7 +53,7 @@ export const CurrencyPrompt = ({
             <TextValidator
               label="amount"
               onChange={amountChangeHandler}
-              name="amount"
+              name={`amount-${index}`}
               value={amount || ''}
               placeholder="0.00"
               validators={['matchRegexp:^\\d+(.\\d{1,2})?$']}
