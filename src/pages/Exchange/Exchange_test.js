@@ -1,5 +1,5 @@
 /* global Feature, Scenario*/
-
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const assert = require('assert');
 
 Feature('Exchange page');
@@ -31,3 +31,22 @@ Scenario(
     assert.strictEqual(targetInputVal, '10.04');
   }
 );
+
+Scenario('recalculate target value after target currency changed', async I => {
+  I.amOnPage('/');
+  I.see('EXCHANGE');
+  I.click('//*[@id="simple-tab-2"]');
+  I.fillField('amount-0', '10');
+  // target value before change target currency
+  const targetInputValBeforeUpdate = await I.grabValueFrom('amount-1');
+
+  assert.strictEqual(targetInputValBeforeUpdate, '8.1');
+
+  I.click('//*[@id="select-prompt-1"]');
+  I.wait(1);
+  I.click({ xpath: '/html/body/div[2]/div[3]/ul/li[2]' });
+  // target value after change target currency
+  const targetInputValAfterUpdate = await I.grabValueFrom('amount-1');
+
+  assert.strictEqual(targetInputValAfterUpdate, '9.1');
+});
