@@ -46,15 +46,15 @@ export const Exchange: FunctionComponent = () => {
       dispatch(setAmount(amount, 0));
     });
 
-    const intervalID = setInterval(() => {
-      fetchRates(currency, { dummy: true }).then(rates => {
-        dispatch(setRates(rates));
-        // recalculate target after fetching
-        dispatch(setAmount(amount, 0));
-      });
-    }, 10000);
-
-    return (): void => clearInterval(intervalID);
+    // const intervalID = setInterval(() => {
+    //   fetchRates(currency, { dummy: true }).then(rates => {
+    //     dispatch(setRates(rates));
+    //     // recalculate target after fetching
+    //     dispatch(setAmount(amount, 0));
+    //   });
+    // }, 10000);
+    //
+    // return (): void => clearInterval(intervalID);
   }, [dispatch, currency]);
 
   return (

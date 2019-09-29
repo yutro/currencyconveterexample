@@ -25,6 +25,15 @@ export const exchange = (
 
     state.currencies[index].currency = currency;
 
+    if (index === 1 && state.rates) {
+      const baseAmount = state.currencies[0].amount;
+      const currencyRate = state.rates[currency];
+
+      state.currencies[1].amount = normalizeInput(
+        convertCurrency(baseAmount, currencyRate, index)
+      );
+    }
+
     return { ...state };
   }
 
