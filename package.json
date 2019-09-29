@@ -34,7 +34,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "CI=true npm run test:dev && npm run test:e2e",
+    "test:dev": "react-scripts test",
     "test:e2e": "npx codeceptjs run --steps",
     "eject": "react-scripts eject"
   },
