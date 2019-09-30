@@ -8,7 +8,7 @@ import { createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 import { PocketType } from '../Pocket/PocketTypes';
 import { fetchRates } from '../../tests/mocks/FxApiResponse';
 import { FlipExchange } from '../../components/FlipExchange/FlipExchange';
-import { setAmount, setRates } from './ExchangeActions';
+import { setRates } from './ExchangeActions';
 
 const excludeCurrency = (
   currencyList: CurrencyListType,
@@ -42,15 +42,11 @@ export const Exchange: FunctionComponent = () => {
   useEffect(() => {
     fetchRates(currency, { dummy: true }).then(rates => {
       dispatch(setRates(rates));
-      // recalculate target after fetching
-      dispatch(setAmount(amount, 0));
     });
 
     const intervalID = setInterval(() => {
       fetchRates(currency, { dummy: true }).then(rates => {
         dispatch(setRates(rates));
-        // recalculate target after fetching
-        dispatch(setAmount(amount, 0));
       });
     }, 10000);
 

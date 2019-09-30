@@ -56,21 +56,36 @@ export const exchange = (
   }
 
   if (action.type === 'SET_AMOUNT' && action.payload) {
-    const { amount: payloadAmount, index } = action.payload;
+    const { amount, index } = action.payload;
+    const {
+      currencies: [base, target]
+    } = state;
+    const { currency } = target;
+    const rate = state.rates ? state.rates[currency] : 0;
 
-    state.currencies[index].amount = payloadAmount;
-
-    const { currency } = state.currencies[1];
-
-    if (state.rates) {
-      const currencyRate = state.rates[currency];
-
-      state.currencies[1].amount = normalizeInput(
-        convertCurrency(payloadAmount, currencyRate, index)
-      );
+    if (index === 0) {
+      return {
+        ...state,
+        currencies: [
+          { ...base, amount },
+          {
+            ...target,
+            amount: normalizeInput(convertCurrency(amount, rate, index))
+          }
+        ]
+      };
     }
 
-    return { ...state };
+    return {
+      ...state,
+      currencies: [
+        {
+          ...base,
+          amount: normalizeInput(convertCurrency(amount, rate, index))
+        },
+        { ...target, amount }
+      ]
+    };
   }
 
   if (action.type === 'SET_RATES') {
