@@ -20,6 +20,7 @@
     "eslint-config-prettier": "^6.3.0",
     "eslint-config-react": "^1.1.7",
     "eslint-plugin-prettier": "^3.1.1",
+    "lint-staged": "^9.4.0",
     "prettier": "^1.18.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
@@ -49,12 +50,10 @@
     }
   },
   "lint-staged": {
-    "linters": {
-      "*.{ts,tsx}": [
-        "eslint --fix",
-        "git add"
-      ]
-    }
+    "*.{ts,tsx}": [
+      "yarn eslint --fix",
+      "git add"
+    ]
   },
   "browserslist": {
     "production": [
