@@ -22,19 +22,30 @@ export const exchange = (
 ): ExchangeType => {
   if (action.type === 'SET_CURRENCY' && action.payload) {
     const { currency, index } = action.payload;
+    const {
+      currencies: [baseCurrencyCard, targetCurrencyCard]
+    } = state;
 
-    state.currencies[index].currency = currency;
-
-    if (index === 1 && state.rates) {
-      const baseAmount = state.currencies[0].amount;
-      const currencyRate = state.rates[currency];
-
-      state.currencies[1].amount = normalizeInput(
-        convertCurrency(baseAmount, currencyRate, index)
-      );
+    if (index === 0) {
+      return {
+        ...state,
+        currencies: [{ ...baseCurrencyCard, currency }, targetCurrencyCard]
+      };
     }
 
-    return { ...state };
+    const { amount } = baseCurrencyCard;
+    const currencyRate = state.rates ? state.rates[currency] : 0;
+
+    return {
+      ...state,
+      currencies: [
+        baseCurrencyCard,
+        {
+          amount: normalizeInput(convertCurrency(amount, currencyRate, 0)),
+          currency
+        }
+      ]
+    };
   }
 
   if (action.type === 'FLIP_EXCHANGE') {
