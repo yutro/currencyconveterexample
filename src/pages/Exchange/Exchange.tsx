@@ -9,6 +9,7 @@ import { PocketType } from '../Pocket/PocketTypes';
 import { fetchRates } from '../../tests/mocks/FxApiResponse';
 import { FlipExchange } from '../../components/FlipExchange/FlipExchange';
 import { setRates } from './ExchangeActions';
+import { RateIndicator } from '../../components/RateIndicator/RateIndicator';
 
 const excludeCurrency = (
   currencyList: CurrencyListType,
@@ -63,7 +64,13 @@ export const Exchange: FunctionComponent = () => {
           exchangeCardTarget.currency
         )}
       />
-      <FlipExchange className={classes.flipExchange} />
+      <Grid container>
+        <FlipExchange className={classes.flipExchange} />
+        <RateIndicator
+          baseCurrency={exchangeCardBase.currency}
+          targetCurrency={exchangeCardTarget.currency}
+        />
+      </Grid>
       <CurrencyPrompt
         {...exchangeCardTarget}
         index={1}
