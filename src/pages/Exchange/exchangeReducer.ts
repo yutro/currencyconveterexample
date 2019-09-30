@@ -74,11 +74,9 @@ export const exchange = (
   }
 
   if (action.type === 'SET_RATES') {
-    const { payload } = action;
+    const { payload: rates } = action;
 
-    state.rates = payload;
-
-    return { ...state };
+    return { ...state, rates };
   }
 
   return state;
