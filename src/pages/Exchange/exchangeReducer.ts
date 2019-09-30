@@ -26,15 +26,21 @@ export const exchange = (
       currencies: [baseCurrencyCard, targetCurrencyCard]
     } = state;
 
+    const { amount } = baseCurrencyCard;
+    const currencyRate = state.rates ? state.rates[currency] : 0;
+
     if (index === 0) {
       return {
         ...state,
-        currencies: [{ ...baseCurrencyCard, currency }, targetCurrencyCard]
+        currencies: [
+          { ...baseCurrencyCard, currency },
+          {
+            ...targetCurrencyCard,
+            amount: normalizeInput(convertCurrency(amount, currencyRate, 0))
+          }
+        ]
       };
     }
-
-    const { amount } = baseCurrencyCard;
-    const currencyRate = state.rates ? state.rates[currency] : 0;
 
     return {
       ...state,
