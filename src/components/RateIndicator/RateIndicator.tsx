@@ -25,14 +25,13 @@ export const RateIndicator = ({
   const classes = useStyles();
   const { rates } = useSelector(({ exchange }: AppStateType) => exchange);
 
-  if (!rates) {
+  if (!rates || !rates[baseCurrency]) {
     return null;
   }
 
   return (
     <Grid item xs={6} className={classes.rateIndicator}>
-      1 {baseCurrency} = {rates[targetCurrency]}
-      {targetCurrency}
+      {`1 ${baseCurrency} = ${rates[targetCurrency]} ${targetCurrency}`}
     </Grid>
   );
 };

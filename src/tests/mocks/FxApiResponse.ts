@@ -183,7 +183,7 @@ export const fxData: FxResponse = {
   }
 };
 
-const mockedRates: any = {
+export const mockedRates: any = {
   EUR: {
     EUR: 1,
     GBP: 0.89,
