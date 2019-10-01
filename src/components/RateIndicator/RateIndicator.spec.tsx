@@ -9,8 +9,9 @@ jest.mock('react-redux', () => ({
 }));
 
 describe('RateIndicator', () => {
-  it('should be empty when no rates at store or baseCurrency not provided', () => {
-    (useSelector as jest.Mock).mockReturnValueOnce({ rates: {} });
+  (useSelector as jest.Mock).mockReturnValue({ rates: {} });
+
+  it('should be empty when no rates at', () => {
     const component = mount(
       <RateIndicator baseCurrency="USD" targetCurrency="GBP" />
     );

@@ -1,4 +1,11 @@
-import { createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
+import {
+  createStyles,
+  Grid,
+  makeStyles,
+  Paper,
+  Theme,
+  Typography
+} from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/reducers';
@@ -12,8 +19,8 @@ type PropsType = {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     rateIndicator: {
-      lineHeight: '2.5em',
-      marginLeft: theme.spacing(10)
+      marginLeft: theme.spacing(5),
+      marginTop: theme.spacing(1)
     }
   })
 );
@@ -31,7 +38,11 @@ export const RateIndicator = ({
 
   return (
     <Grid item xs={6} className={classes.rateIndicator}>
-      {`1 ${baseCurrency} = ${rates[targetCurrency]} ${targetCurrency}`}
+      <Paper>
+        <Typography component="div" align="center">
+          {`1 ${baseCurrency} = ${rates[targetCurrency]} ${targetCurrency}`}
+        </Typography>
+      </Paper>
     </Grid>
   );
 };
