@@ -9,3 +9,9 @@ export const keysOf = <T extends string>(
 
   return keys;
 };
+
+const convertThroughCrossCourse = (
+  baseRate: number,
+  targetRate: number,
+  amount: number
+): number => parseFloat(((amount / baseRate) * targetRate).toFixed(2));
