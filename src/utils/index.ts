@@ -10,7 +10,7 @@ export const keysOf = <T extends string>(
   return keys;
 };
 
-const convertThroughCrossCourse = (
+export const convertThroughCrossCourse = (
   baseRate: number,
   targetRate: number,
   amount: number
