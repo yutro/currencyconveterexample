@@ -1,20 +1,11 @@
 import { ExchangeType } from './exchangeTypes';
 import { ExchangeActionsType } from './ExchangeActions';
+import { convertThroughCrossCourse } from '../../utils';
 
 export const initialState: ExchangeType = {
   currencies: [{ amount: 0, currency: 'USD' }, { amount: 0, currency: 'GBP' }],
   rates: undefined
 };
-
-const convertCurrency = (
-  amount: number,
-  rate: number,
-  index: number
-): number => {
-  return index ? amount / rate : amount * rate;
-};
-const normalizeInput = (amount: number): number =>
-  parseFloat(amount.toFixed(2)) || 0;
 
 export const exchange = (
   state = initialState,
@@ -23,20 +14,25 @@ export const exchange = (
   if (action.type === 'SET_CURRENCY' && action.payload) {
     const { currency, index } = action.payload;
     const {
-      currencies: [baseCurrencyCard, targetCurrencyCard]
+      currencies: [base, target]
     } = state;
 
-    const { amount } = baseCurrencyCard;
-    const currencyRate = state.rates ? state.rates[currency] : 0;
+    const { amount } = base;
+    const baseCurrencyRate = state.rates ? state.rates[base.currency] : 0;
+    const targetCurrencyRate = state.rates ? state.rates[target.currency] : 0;
 
     if (index === 0) {
       return {
         ...state,
         currencies: [
-          { ...baseCurrencyCard, currency },
+          { ...base, currency },
           {
-            ...targetCurrencyCard,
-            amount: normalizeInput(convertCurrency(amount, currencyRate, 0))
+            ...target,
+            amount: convertThroughCrossCourse(
+              baseCurrencyRate,
+              targetCurrencyRate,
+              amount
+            )
           }
         ]
       };
@@ -45,9 +41,13 @@ export const exchange = (
     return {
       ...state,
       currencies: [
-        baseCurrencyCard,
+        base,
         {
-          amount: normalizeInput(convertCurrency(amount, currencyRate, 0)),
+          amount: convertThroughCrossCourse(
+            targetCurrencyRate,
+            baseCurrencyRate,
+            amount
+          ),
           currency
         }
       ]
@@ -66,8 +66,9 @@ export const exchange = (
     const {
       currencies: [base, target]
     } = state;
-    const { currency } = target;
-    const rate = state.rates ? state.rates[currency] : 0;
+
+    const baseCurrencyRate = state.rates ? state.rates[base.currency] : 0;
+    const targetCurrencyRate = state.rates ? state.rates[target.currency] : 0;
 
     if (index === 0) {
       return {
@@ -76,7 +77,11 @@ export const exchange = (
           { ...base, amount },
           {
             ...target,
-            amount: normalizeInput(convertCurrency(amount, rate, index))
+            amount: convertThroughCrossCourse(
+              baseCurrencyRate,
+              targetCurrencyRate,
+              amount
+            )
           }
         ]
       };
@@ -87,7 +92,11 @@ export const exchange = (
       currencies: [
         {
           ...base,
-          amount: normalizeInput(convertCurrency(amount, rate, index))
+          amount: convertThroughCrossCourse(
+            targetCurrencyRate,
+            baseCurrencyRate,
+            amount
+          )
         },
         { ...target, amount }
       ]
