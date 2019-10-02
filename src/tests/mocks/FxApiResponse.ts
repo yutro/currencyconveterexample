@@ -206,7 +206,7 @@ export const fetchRates = (
   { dummy }: { dummy: boolean }
 ): Promise<RateType> => {
   if (dummy) {
-    return new Promise(resolve => resolve(mockedRates[currency]));
+    return new Promise(resolve => resolve(fxData.rates));
   }
 
   return new Promise<RateType>(resolve => {
