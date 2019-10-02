@@ -1,7 +1,5 @@
 /* eslint-disable max-lines */
-/* global Promise */
-import { FxResponse, RateType } from '../../types/FxApi';
-import { CurrencyType } from '../../types/CurrencyType';
+import { FxResponse } from '../../types/FxApi';
 
 export const fxData: FxResponse = {
   base: 'USD',
@@ -181,24 +179,4 @@ export const fxData: FxResponse = {
     ZWL: 322.000001
   },
   timestamp: 1568930400
-};
-
-export const fetchRates = (
-  currency: CurrencyType,
-  { dummy }: { dummy: boolean }
-): Promise<RateType> => {
-  if (dummy) {
-    return new Promise<RateType>((resolve): void => resolve(fxData.rates));
-  }
-
-  return new Promise<RateType>((resolve): void => {
-    fetch(
-      `http://data.fixer.io/api/latest?access_key=358183c9d3e9e0ebf6590821377322ba&base=${currency}&symbols=USD,GBP,EUR`
-    )
-      .then(response => response.json())
-      .then((data: FxResponse) => {
-        resolve(data.rates);
-      })
-      .catch(e => console.log('--- error fetching data ---', e));
-  });
 };

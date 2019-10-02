@@ -6,10 +6,10 @@ import { CurrencyPrompt } from '../../components/CurrencyPrompt/CurrencyPrompt';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 import { PocketType } from '../Pocket/PocketTypes';
-import { fetchRates } from '../../tests/mocks/FxApiResponse';
 import { FlipExchange } from '../../components/FlipExchange/FlipExchange';
 import { setRates } from './ExchangeActions';
 import { RateIndicator } from '../../components/RateIndicator/RateIndicator';
+import { fetchRates } from '../../transports';
 
 const excludeCurrency = (
   currencyList: CurrencyListType,
@@ -41,12 +41,12 @@ export const Exchange: FunctionComponent = () => {
   const { currency, amount } = exchangeCardBase;
 
   useEffect(() => {
-    fetchRates(currency, { dummy: true }).then(rates => {
+    fetchRates(currency).then(rates => {
       dispatch(setRates(rates));
     });
 
     const intervalID = setInterval(() => {
-      fetchRates(currency, { dummy: true }).then(rates => {
+      fetchRates(currency).then(rates => {
         dispatch(setRates(rates));
       });
     }, 10000);
