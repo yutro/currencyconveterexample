@@ -10,6 +10,7 @@ import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/reducers';
 import { CurrencyType } from '../../types/CurrencyType';
+import { convertThroughCrossCourse } from '../../utils';
 
 type PropsType = {
   baseCurrency: CurrencyType;
@@ -40,7 +41,11 @@ export const RateIndicator = ({
     <Grid item xs={6} className={classes.rateIndicator}>
       <Paper>
         <Typography component="div" align="center">
-          {`1 ${baseCurrency} = ${rates[targetCurrency]} ${targetCurrency}`}
+          {`1 ${baseCurrency} = ${convertThroughCrossCourse(
+            rates[baseCurrency],
+            rates[targetCurrency],
+            1
+          )} ${targetCurrency}`}
         </Typography>
       </Paper>
     </Grid>
