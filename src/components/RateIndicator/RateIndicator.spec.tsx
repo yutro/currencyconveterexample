@@ -2,7 +2,7 @@ import { RateIndicator } from './RateIndicator';
 import { useSelector } from 'react-redux';
 import React from 'react';
 import { mount } from 'enzyme';
-import { mockedRates } from '../../tests/mocks/FxApiResponse';
+import { fxData } from '../../tests/mocks/FxApiResponse';
 
 jest.mock('react-redux', () => ({
   useSelector: jest.fn()
@@ -21,12 +21,12 @@ describe('RateIndicator', () => {
 
   it('should contain target rate when baseCurrency && targetCurrency && rates are provided', () => {
     (useSelector as jest.Mock).mockReturnValueOnce({
-      rates: mockedRates['USD']
+      rates: fxData.rates
     });
     const component = mount(
       <RateIndicator baseCurrency="USD" targetCurrency="GBP" />
     );
 
-    expect(component.text()).toStrictEqual('1 USD = 0.81 GBP');
+    expect(component.text()).toStrictEqual('1 USD = 0.8 GBP');
   });
 });

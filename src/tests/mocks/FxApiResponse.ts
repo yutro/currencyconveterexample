@@ -1,13 +1,12 @@
+/* eslint-disable max-lines */
 /* global Promise */
-// eslint-disable-next-line max-lines
 import { FxResponse, RateType } from '../../types/FxApi';
 import { CurrencyType } from '../../types/CurrencyType';
 
 export const fxData: FxResponse = {
+  base: 'USD',
   disclaimer: 'Usage subject to terms: https://openexchangerates.org/terms',
   license: 'https://openexchangerates.org/license',
-  timestamp: 1568930400,
-  base: 'USD',
   rates: {
     AED: 3.673088,
     AFN: 78.225613,
@@ -180,25 +179,8 @@ export const fxData: FxResponse = {
     ZAR: 14.817146,
     ZMW: 13.214954,
     ZWL: 322.000001
-  }
-};
-
-export const mockedRates: any = {
-  EUR: {
-    EUR: 1,
-    GBP: 0.89,
-    USD: 1.09
   },
-  GBP: {
-    EUR: 1.13,
-    GBP: 1,
-    USD: 1.24
-  },
-  USD: {
-    EUR: 0.91,
-    GBP: 0.81,
-    USD: 1
-  }
+  timestamp: 1568930400
 };
 
 export const fetchRates = (
@@ -206,10 +188,10 @@ export const fetchRates = (
   { dummy }: { dummy: boolean }
 ): Promise<RateType> => {
   if (dummy) {
-    return new Promise(resolve => resolve(fxData.rates));
+    return new Promise<RateType>((resolve): void => resolve(fxData.rates));
   }
 
-  return new Promise<RateType>(resolve => {
+  return new Promise<RateType>((resolve): void => {
     fetch(
       `http://data.fixer.io/api/latest?access_key=358183c9d3e9e0ebf6590821377322ba&base=${currency}&symbols=USD,GBP,EUR`
     )
