@@ -6,7 +6,7 @@ const SET_AMOUNT = 'SET_AMOUNT';
 const SET_RATES = 'SET_RATES';
 const FLIP_EXCHANGE = 'FLIP_EXCHANGE';
 
-type SetCurrencyType = {
+export type SetCurrencyType = {
   currency: CurrencyType;
   index: number;
 };

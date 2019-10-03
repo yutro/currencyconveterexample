@@ -1,6 +1,7 @@
 import { ExchangeType } from './exchangeTypes';
 import { ExchangeActionsType } from './ExchangeActions';
 import { convertThroughCrossCourse, getExchangeRates } from '../../utils';
+import { setCurrencyActionHandler } from './ExchangeReducerHandlers';
 
 export const initialState: ExchangeType = {
   currencies: [{ amount: 0, currency: 'USD' }, { amount: 0, currency: 'GBP' }],
@@ -12,56 +13,7 @@ export const exchange = (
   action: ExchangeActionsType
 ): ExchangeType => {
   if (action.type === 'SET_CURRENCY' && action.payload) {
-    const { currency, index } = action.payload;
-    const {
-      currencies: [base, target]
-    } = state;
-
-    const { amount } = base;
-
-    if (index === 0) {
-      const [baseCurrencyRate, targetCurrencyRate] = getExchangeRates(
-        currency,
-        target.currency,
-        state
-      );
-
-      return {
-        ...state,
-        currencies: [
-          { ...base, currency },
-          {
-            ...target,
-            amount: convertThroughCrossCourse(
-              baseCurrencyRate,
-              targetCurrencyRate,
-              amount
-            )
-          }
-        ]
-      };
-    }
-
-    const [baseCurrencyRate, targetCurrencyRate] = getExchangeRates(
-      currency,
-      base.currency,
-      state
-    );
-
-    return {
-      ...state,
-      currencies: [
-        base,
-        {
-          amount: convertThroughCrossCourse(
-            targetCurrencyRate,
-            baseCurrencyRate,
-            amount
-          ),
-          currency
-        }
-      ]
-    };
+    return setCurrencyActionHandler(state, action.payload);
   }
 
   if (action.type === 'FLIP_EXCHANGE') {
