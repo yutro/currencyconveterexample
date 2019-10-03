@@ -11,7 +11,7 @@ export const fetchRates = (): Promise<RateType> => {
 
   return new Promise<RateType>((resolve): void => {
     fetch(
-      `http://data.fixer.io/api/latest?access_key=358183c9d3e9e0ebf6590821377322ba&symbols=USD,GBP,EUR`
+      `http://data.fixer.io/api/latest?access_key=af0f16e8c68c0ddbb703080e016795ca&symbols=USD,GBP,EUR`
     )
       .then(response => response.json())
       .then((data: FxResponse) => {
