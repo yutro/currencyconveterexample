@@ -3,10 +3,14 @@ import { CurrencyType } from '../../types/CurrencyType';
 import { ChangeEvent } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { setCurrency, setAmount } from '../../pages/Exchange/ExchangeActions';
+import { SelectHandlerType } from '../CurrencySelect/CurrencySelect';
 
 export const useCurrencyPromptHandler = (
   index: number
-): { amountChangeHandler: Function; selectCurrencyHandler: Function } => {
+): {
+  amountChangeHandler: any;
+  selectCurrencyHandler: SelectHandlerType;
+} => {
   const dispatch = useDispatch();
 
   const selectCurrencyHandler = (currency: CurrencyType): void => {
