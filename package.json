@@ -35,6 +35,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "serve": "yarn build && serve -s build",
     "test": "CI=true npm run test:dev && npm run test:e2e",
     "test:dev": "react-scripts test",
     "test:e2e": "codeceptjs run --steps",
