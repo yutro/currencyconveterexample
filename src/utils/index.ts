@@ -1,3 +1,6 @@
+import { CurrencyType } from '../types/CurrencyType';
+import { ExchangeType } from '../pages/Exchange/exchangeTypes';
+
 export const keysOf = <T extends string>(
   obj: { [key in T]: unknown }
 ): ReadonlyArray<T> => {
@@ -15,3 +18,14 @@ export const convertThroughCrossCourse = (
   targetRate: number,
   amount: number
 ): number => parseFloat(((amount / baseRate) * targetRate).toFixed(2));
+
+export const getExchangeRates = (
+  from: CurrencyType,
+  to: CurrencyType,
+  state: ExchangeType
+): ReadonlyArray<number> => {
+  const baseCurrencyRate = state.rates ? state.rates[from] : 0;
+  const targetCurrencyRate = state.rates ? state.rates[to] : 0;
+
+  return [baseCurrencyRate, targetCurrencyRate];
+};

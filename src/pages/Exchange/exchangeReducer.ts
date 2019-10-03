@@ -1,6 +1,6 @@
 import { ExchangeType } from './exchangeTypes';
 import { ExchangeActionsType } from './ExchangeActions';
-import { convertThroughCrossCourse } from '../../utils';
+import { convertThroughCrossCourse, getExchangeRates } from '../../utils';
 
 export const initialState: ExchangeType = {
   currencies: [{ amount: 0, currency: 'USD' }, { amount: 0, currency: 'GBP' }],
@@ -18,10 +18,14 @@ export const exchange = (
     } = state;
 
     const { amount } = base;
-    const baseCurrencyRate = state.rates ? state.rates[base.currency] : 0;
-    const targetCurrencyRate = state.rates ? state.rates[target.currency] : 0;
 
     if (index === 0) {
+      const [baseCurrencyRate, targetCurrencyRate] = getExchangeRates(
+        currency,
+        target.currency,
+        state
+      );
+
       return {
         ...state,
         currencies: [
@@ -37,6 +41,12 @@ export const exchange = (
         ]
       };
     }
+
+    const [baseCurrencyRate, targetCurrencyRate] = getExchangeRates(
+      currency,
+      base.currency,
+      state
+    );
 
     return {
       ...state,
@@ -67,8 +77,11 @@ export const exchange = (
       currencies: [base, target]
     } = state;
 
-    const baseCurrencyRate = state.rates ? state.rates[base.currency] : 0;
-    const targetCurrencyRate = state.rates ? state.rates[target.currency] : 0;
+    const [baseCurrencyRate, targetCurrencyRate] = getExchangeRates(
+      base.currency,
+      target.currency,
+      state
+    );
 
     if (index === 0) {
       return {
