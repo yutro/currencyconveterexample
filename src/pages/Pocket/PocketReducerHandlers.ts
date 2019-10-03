@@ -18,8 +18,8 @@ export const updatePocketActionHandler = (
           ...pocket,
           amount:
             type === 'base'
-              ? pocket.amount - payload.amount
-              : pocket.amount + payload.amount
+              ? Number(pocket.amount) - Number(payload.amount)
+              : Number(pocket.amount) + Number(payload.amount)
         }
       }
     };
