@@ -45,8 +45,8 @@ export const CurrencyPrompt = ({
         </Grid>
         <Grid item xs={5}>
           <ValidatorForm
-            onError={errors => console.log(errors)}
-            onSubmit={e => {
+            onError={(errors): void => console.log(errors)}
+            onSubmit={(e): void => {
               console.log(e);
             }}
           >
