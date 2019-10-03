@@ -48,5 +48,5 @@ Scenario('recalculate target value after target currency changed', async I => {
   // target value after change target currency
   const targetInputValAfterUpdate = await I.grabValueFrom('amount-1');
 
-  assert.strictEqual(targetInputValAfterUpdate, '12.53');
+  assert.strictEqual(targetInputValAfterUpdate, '9.06');
 });
