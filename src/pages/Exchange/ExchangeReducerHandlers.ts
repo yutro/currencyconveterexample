@@ -57,3 +57,12 @@ export const setCurrencyActionHandler = (
     ]
   };
 };
+
+export const flipExchangeActionHandler = (
+  state: ExchangeType
+): ExchangeType => {
+  const { currencies, ...rest } = state;
+  const reversedCurrencies = [...currencies].reverse();
+
+  return { ...rest, currencies: reversedCurrencies };
+};

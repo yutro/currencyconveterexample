@@ -1,7 +1,10 @@
 import { ExchangeType } from './exchangeTypes';
 import { ExchangeActionsType } from './ExchangeActions';
 import { convertThroughCrossCourse, getExchangeRates } from '../../utils';
-import { setCurrencyActionHandler } from './ExchangeReducerHandlers';
+import {
+  setCurrencyActionHandler,
+  flipExchangeActionHandler
+} from './ExchangeReducerHandlers';
 
 export const initialState: ExchangeType = {
   currencies: [{ amount: 0, currency: 'USD' }, { amount: 0, currency: 'GBP' }],
@@ -17,10 +20,7 @@ export const exchange = (
   }
 
   if (action.type === 'FLIP_EXCHANGE') {
-    const { currencies, ...rest } = state;
-    const reversedCurrencies = [...currencies].reverse();
-
-    return { ...rest, currencies: reversedCurrencies };
+    return flipExchangeActionHandler(state);
   }
 
   if (action.type === 'SET_AMOUNT' && action.payload) {
