@@ -38,7 +38,6 @@ export const Exchange: FunctionComponent = () => {
     return currency;
   });
   const [exchangeCardBase, exchangeCardTarget] = currencies;
-  const { currency, amount } = exchangeCardBase;
 
   useEffect(() => {
     fetchRates().then(rates => {
@@ -52,7 +51,7 @@ export const Exchange: FunctionComponent = () => {
     }, 10000);
 
     return (): void => clearInterval(intervalID);
-  }, [dispatch, currency, amount]);
+  }, [dispatch]);
 
   return (
     <>
