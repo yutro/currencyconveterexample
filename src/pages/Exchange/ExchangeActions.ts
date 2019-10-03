@@ -51,7 +51,7 @@ export const setRates = (payload: RateType): SetRatesReturnType => ({
   type: SET_RATES
 });
 
-type FlipExchangeReturnType = { type: typeof FLIP_EXCHANGE };
+export type FlipExchangeReturnType = { type: typeof FLIP_EXCHANGE };
 export const flipExchange = (): FlipExchangeReturnType => ({
   type: FLIP_EXCHANGE
 });

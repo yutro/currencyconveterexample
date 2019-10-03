@@ -1,9 +1,13 @@
 import { useDispatch } from 'react-redux';
-import { flipExchange } from '../../pages/Exchange/ExchangeActions';
+import {
+  flipExchange,
+  FlipExchangeReturnType
+} from '../../pages/Exchange/ExchangeActions';
 
 export const useFlipExchange = () => {
   const dispatch = useDispatch();
-  const dispatchFlipExchange = () => dispatch(flipExchange());
+  const dispatchFlipExchange = (): FlipExchangeReturnType =>
+    dispatch(flipExchange());
 
   return { dispatchFlipExchange };
 };

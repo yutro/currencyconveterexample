@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/reducers';
@@ -7,7 +7,7 @@ import { getPocketByCurrency } from '../../pages/Pocket/helpers';
 import { PocketStateType, PocketType } from '../../pages/Pocket/PocketTypes';
 import { convert } from './ConvertButtonHandlers';
 
-export const ConvertButton = () => {
+export const ConvertButton = (): ReactElement => {
   const dispatch = useDispatch();
   const [
     baseExchangeItem,

@@ -4,7 +4,9 @@ import { ChangeEvent } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { setCurrency, setAmount } from '../../pages/Exchange/ExchangeActions';
 
-export const useCurrencyPromptHandler = (index: number) => {
+export const useCurrencyPromptHandler = (
+  index: number
+): { amountChangeHandler: Function; selectCurrencyHandler: Function } => {
   const dispatch = useDispatch();
 
   const selectCurrencyHandler = (currency: CurrencyType): void => {

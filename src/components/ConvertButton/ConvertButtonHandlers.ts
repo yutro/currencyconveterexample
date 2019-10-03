@@ -5,7 +5,7 @@ import { updatePocket } from '../../pages/Pocket/PocketActions';
 export const convert = (
   dispatch: Dispatch,
   [baseExchangeItem, targetExchangeItem]: ExchangeCurrenciesListType
-) => () => {
+) => (): void => {
   dispatch(
     updatePocket('base', {
       amount: baseExchangeItem.amount,
