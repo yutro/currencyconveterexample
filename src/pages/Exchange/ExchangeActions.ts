@@ -23,7 +23,7 @@ export const setCurrency = (
   type: SET_CURRENCY
 });
 
-type SetAmountType = {
+export type SetAmountType = {
   amount: number;
   index: number;
 };

@@ -1,6 +1,6 @@
 import { ExchangeType } from './exchangeTypes';
 import { convertThroughCrossCourse, getExchangeRates } from '../../utils';
-import { SetCurrencyType } from './ExchangeActions';
+import { SetCurrencyType, SetAmountType } from './ExchangeActions';
 
 export const setCurrencyActionHandler = (
   state: ExchangeType,
@@ -65,4 +65,52 @@ export const flipExchangeActionHandler = (
   const reversedCurrencies = [...currencies].reverse();
 
   return { ...rest, currencies: reversedCurrencies };
+};
+
+export const setAmountActionHandler = (
+  state: ExchangeType,
+  payload: SetAmountType
+): ExchangeType => {
+  const { amount, index } = payload;
+  const {
+    currencies: [base, target]
+  } = state;
+
+  const [baseCurrencyRate, targetCurrencyRate] = getExchangeRates(
+    base.currency,
+    target.currency,
+    state
+  );
+
+  if (index === 0) {
+    return {
+      ...state,
+      currencies: [
+        { ...base, amount },
+        {
+          ...target,
+          amount: convertThroughCrossCourse(
+            baseCurrencyRate,
+            targetCurrencyRate,
+            amount
+          )
+        }
+      ]
+    };
+  }
+
+  return {
+    ...state,
+    currencies: [
+      {
+        ...base,
+        amount: convertThroughCrossCourse(
+          targetCurrencyRate,
+          baseCurrencyRate,
+          amount
+        )
+      },
+      { ...target, amount }
+    ]
+  };
 };
