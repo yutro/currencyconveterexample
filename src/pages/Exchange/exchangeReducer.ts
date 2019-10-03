@@ -3,7 +3,8 @@ import { ExchangeActionsType } from './ExchangeActions';
 import {
   setCurrencyActionHandler,
   flipExchangeActionHandler,
-  setAmountActionHandler
+  setAmountActionHandler,
+  setRatesActionHandler
 } from './ExchangeReducerHandlers';
 
 export const initialState: ExchangeType = {
@@ -28,9 +29,7 @@ export const exchange = (
   }
 
   if (action.type === 'SET_RATES') {
-    const { payload: rates } = action;
-
-    return { ...state, rates };
+    return setRatesActionHandler(state, action.payload);
   }
 
   return state;

@@ -1,6 +1,7 @@
 import { ExchangeType } from './exchangeTypes';
 import { convertThroughCrossCourse, getExchangeRates } from '../../utils';
 import { SetCurrencyType, SetAmountType } from './ExchangeActions';
+import { RateType } from '../../types/FxApi';
 
 export const setCurrencyActionHandler = (
   state: ExchangeType,
@@ -114,3 +115,8 @@ export const setAmountActionHandler = (
     ]
   };
 };
+
+export const setRatesActionHandler = (
+  state: ExchangeType,
+  rates: RateType
+): ExchangeType => ({ ...state, rates });
