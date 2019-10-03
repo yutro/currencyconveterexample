@@ -41,12 +41,12 @@ export const Exchange: FunctionComponent = () => {
   const { currency, amount } = exchangeCardBase;
 
   useEffect(() => {
-    fetchRates(currency).then(rates => {
+    fetchRates().then(rates => {
       dispatch(setRates(rates));
     });
 
     const intervalID = setInterval(() => {
-      fetchRates(currency).then(rates => {
+      fetchRates().then(rates => {
         dispatch(setRates(rates));
       });
     }, 10000);
