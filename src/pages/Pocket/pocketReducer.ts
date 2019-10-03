@@ -1,6 +1,6 @@
 import { PocketStateType } from './PocketTypes';
-import { getPocketByCurrency } from './helpers';
 import { PocketActions } from './PocketActions';
+import { updatePocketActionHandler } from './PocketReducerHandlers';
 
 export const initialState: PocketStateType = {
   allIds: [1, 2, 3],
@@ -16,37 +16,11 @@ export const pockets = (
   { type, payload }: PocketActions
 ): PocketStateType => {
   if (type === 'UPDATE_BASE_POCKET') {
-    const pocket = getPocketByCurrency(payload.currency, state);
-
-    if (pocket) {
-      return {
-        ...state,
-        byId: {
-          ...state.byId,
-          [pocket.id]: {
-            ...pocket,
-            amount: pocket.amount - payload.amount
-          }
-        }
-      };
-    }
+    return updatePocketActionHandler(state, payload, 'base');
   }
 
   if (type === 'UPDATE_TARGET_POCKET') {
-    const pocket = getPocketByCurrency(payload.currency, state);
-
-    if (pocket) {
-      return {
-        ...state,
-        byId: {
-          ...state.byId,
-          [pocket.id]: {
-            ...pocket,
-            amount: pocket.amount + payload.amount
-          }
-        }
-      };
-    }
+    return updatePocketActionHandler(state, payload, 'target');
   }
 
   return state;
